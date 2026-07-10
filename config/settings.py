@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 from pathlib import Path
 from decouple import config
 from datetime import timedelta
-import mongoengine
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -48,6 +47,7 @@ INSTALLED_APPS = [
     "apps.likes",
     "apps.accounts",
     "rest_framework",
+    "drf_spectacular",
 ]
 
 MIDDLEWARE = [
@@ -85,8 +85,7 @@ WSGI_APPLICATION = "config.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.dummy",
     }
 }
 
@@ -127,13 +126,6 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 
-# MongoDB connection using MongoEngine
-
-MONGO_DB = config("MONGO_DB", default="blog_platform")
-MONGO_HOST = config("MONGO_HOST", default="localhost")
-MONGO_PORT = config("MONGO_PORT", default=27017, cast=int)
-
-mongoengine.connect(db=MONGO_DB, host=MONGO_HOST, port=MONGO_PORT)
 
 # REST Framework and SimpleJWT Configuration
 REST_FRAMEWORK = {
